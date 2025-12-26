@@ -1,0 +1,46 @@
+<!-- Top Toolbar -->
+<mat-toolbar color="primary" class="toolbar">
+  <span class="title">Admin Dashboard</span>
+
+  <span class="spacer"></span>
+
+  <button mat-button color="warn" (click)="logout()">
+    Logout
+  </button>
+</mat-toolbar>
+
+<!-- Welcome Section -->
+<div class="container">
+  <h1>Welcome Admin 👋</h1>
+
+  <!-- Action Buttons -->
+  <div class="button-bar">
+    <button mat-raised-button color="primary" (click)="showUsers()">
+      User Management
+    </button>
+
+    <button mat-raised-button color="accent" (click)="showPrograms()">
+      Programs
+    </button>
+
+    <button mat-raised-button color="warn" (click)="showReports()">
+      Reports
+    </button>
+  </div>
+
+  <!-- Content Area -->
+  <mat-card class="content-card">
+    <!-- NOTHING shown initially -->
+    <div *ngIf="activeView === 'none'" class="placeholder">
+      Please select an option above
+    </div>
+
+    <!-- USER MANAGEMENT -->
+    <app-user-management *ngIf="activeView === 'users'"></app-user-management>
+     <!-- PROGRAMS -->
+    <app-programs *ngIf="activeView === 'programs'"></app-programs>
+    
+    <!-- REPORTS -->
+    <app-reports *ngIf="activeView === 'reports'"></app-reports>
+  </mat-card>
+</div>

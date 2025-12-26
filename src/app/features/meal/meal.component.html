@@ -1,0 +1,63 @@
+<h2 class="page-title">Meal Planner</h2>
+
+<!-- SUMMARY -->
+<div class="summary-grid">
+
+  <mat-card class="summary-card">
+    <p class="label">Daily Goal</p>
+    <h3>{{ dailyCalorieGoal }} kcal</h3>
+  </mat-card>
+
+  <mat-card class="summary-card">
+    <p class="label">Consumed</p>
+    <h3>{{ totalCalories }} kcal</h3>
+  </mat-card>
+
+  <mat-card class="summary-card">
+    <p class="label">Remaining</p>
+    <h3>{{ remainingCalories }} kcal</h3>
+  </mat-card>
+
+</div>
+
+<!-- MEAL LIST -->
+<h3 class="section-title">Today's Meals</h3>
+
+<div class="meal-list">
+
+  <mat-card
+  class="meal-card"
+  *ngFor="let meal of meals"
+  [class.eaten]="meal.eaten"
+>
+
+  <!-- HEADER -->
+  <div class="meal-header">
+    <h4>{{ meal.meal }}</h4>
+
+    <span class="calories" (click)="toggleEaten(meal)">
+      {{ meal.calories }} kcal
+      <span *ngIf="meal.eaten">✔</span>
+    </span>
+  </div>
+
+  <!-- ITEMS -->
+  <ul>
+    <li *ngFor="let item of meal.items">{{ item }}</li>
+  </ul>
+
+  <!-- BUTTON -->
+  <button mat-button color="primary" (click)="toggleNutrition(meal)">
+    {{ meal.expanded ? 'Hide Nutrition' : 'View Nutrition' }}
+  </button>
+
+  <!-- NUTRITION (VISIBLE ONLY ON CLICK) -->
+  <div class="nutrition" *ngIf="meal.expanded">
+    <p>Protein: {{ meal.protein }} g</p>
+    <p>Carbs: {{ meal.carbs }} g</p>
+    <p>Fats: {{ meal.fats }} g</p>
+  </div>
+
+</mat-card>
+
+</div>

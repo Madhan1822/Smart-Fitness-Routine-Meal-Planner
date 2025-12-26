@@ -1,0 +1,34 @@
+<mat-toolbar color="primary">
+  <span>Smart Fitness Planner</span>
+
+  <span class="spacer"></span>
+
+
+
+   <!-- <button
+    mat-button
+    *ngIf="isAdmin"
+    routerLink="/admin"
+  >
+    Admin Panel
+  </button> -->
+
+
+  <!-- <button mat-button (click)="goToAdmin()">
+  Admin
+</button> -->
+
+  <span class="user" *ngIf="userEmail">
+    {{ userEmail }}
+  </span>
+<button
+  *ngIf="isLoggedIn && isAdmin"
+  mat-button
+  (click)="goToAdmin()">
+  Admin
+</button>
+
+<button mat-icon-button (click)="logout()">
+  <mat-icon>logout</mat-icon>
+</button>
+</mat-toolbar>

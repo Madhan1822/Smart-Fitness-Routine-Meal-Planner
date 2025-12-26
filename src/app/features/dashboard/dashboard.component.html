@@ -1,0 +1,158 @@
+<div class="dashboard-grid">
+
+  <!-- ROW 1 -->
+  <div class="row two-col">
+    <!-- Program -->
+    <mat-card class="card program-card">
+  <div class="card-header">
+    <h3>Program</h3>
+ 
+    <!-- <button
+      class="edit-btn"
+      (click)="OneditProgram()">
+      Change
+    </button> -->
+    <button class="btn-outline" (click)="onChangeProgram()">
+      Change
+   </button>
+  </div> 
+
+  <div class="form-row">
+    <label>Gender</label>
+    <select
+  [(ngModel)]="activeGender"
+  [disabled]="!isProgramEditable"
+>
+  <option [ngValue]="null" disabled selected>
+    Select Gender
+  </option>
+
+  <option *ngFor="let g of genders" [value]="g">
+    {{ g | titlecase }}
+  </option>
+</select>
+
+<select
+  [(ngModel)]="activeGoal"
+  [disabled]="!isProgramEditable"
+>
+  <option [ngValue]="null" disabled selected>
+    Select Goal
+  </option>
+
+  <option *ngFor="let g of goals" [value]="g">
+    {{ g | titlecase }}
+  </option>
+</select>
+  </div>
+
+  <!-- <button class="btn-outline" (click)="onChangeProgram()">
+  Change
+</button> -->
+
+<button
+  class="btn-primary"
+  (click)="onSaveProgram()"
+  [disabled]="!isProgramEditable"
+>
+  Save Program
+</button>
+</mat-card>
+
+    <!-- Active Program -->
+    <mat-card class="card">
+      <h3>Active Program</h3>
+      <p><b>Gender:</b> {{ activeGender || '-' }}</p>
+      <p><b>Goal:</b> {{ activeGoal || '-' }}</p>
+      <p><b>Level:</b> {{ activeLevel || '-' }}</p>
+      <p><b>Started On:</b> {{ programStartedOn || '-' }}</p>
+    </mat-card>
+  </div>
+
+  <!-- ROW 2 -->
+  <div class="row four-col">
+    <mat-card class="stat-card">
+      <h4>Calories</h4>
+      <div class="stat">{{ caloriesConsumed }} kcal</div>
+      <small>Goal: {{ caloriesGoal }} kcal</small>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <h4>Workout Streak</h4>
+      <div class="stat">{{ animatedStreak }} days 🔥</div>
+    </mat-card>
+
+  <mat-card class="stat-card weight-card">
+      <h4>Weight</h4>
+      <button
+    class="edit-btn"
+    (click)="editWeight()"
+    title="Edit weight">
+    Edit
+  </button>
+  <div class="weight-row">
+  <div class="weight-value">
+  <span class="value">{{ weight }} kg</span>
+  <span
+    class="trend-arrow"
+    [ngClass]="{
+      up: weightTrendDirection === 'UP',
+      down: weightTrendDirection === 'DOWN',
+      stable: weightTrendDirection === 'STABLE'
+    }"
+    title="Weight trend">
+    <ng-container [ngSwitch]="weightTrendDirection">
+      <span *ngSwitchCase="'UP'">▲</span>
+      <span *ngSwitchCase="'DOWN'">▼</span>
+      <span *ngSwitchDefault>—</span>
+    </ng-container>
+  </span>
+</div>
+  <!-- Edit button stays exactly as you already have -->
+  <!-- <button
+    class="edit-btn"
+    (click)="editWeight()"
+    title="Edit weight">
+    Edit
+  </button> -->
+</div>
+
+  <!-- <p class="stat-value">{{ weight }} kg</p> -->
+  <p class="stat-sub">STABLE / NEUTRAL</p>
+
+  <div *ngIf="isEditingWeight">
+    <input
+      type="number"
+      [(ngModel)]="weight"
+      placeholder="kg"/>
+    <button class="primary-btn" (click)="saveWeight()">
+      Save
+    </button>
+  </div>
+
+  <p class="warning" *ngIf="weightWarning">
+    {{ weightWarning }}
+  </p>
+</mat-card>
+
+    <mat-card class="stat-card">
+      <h4>Workout Count</h4>
+      <small>This week: {{ workoutsThisWeek }}</small><br />
+      <small>This month: {{ workoutsThisMonth }}</small>
+    </mat-card>
+  </div>
+
+  <!-- ROW 3 -->
+  <div class="row two-col">
+    <mat-card class="card chart-card">
+      <h3>Weekly Weight Trend</h3>
+      <canvas id="weightChart"></canvas>
+    </mat-card>
+
+    <mat-card class="card chart-card">
+      <h3>Weekly Workout Summary</h3>
+      <canvas id="workoutChart"></canvas>
+    </mat-card>
+  </div>
+
+</div>

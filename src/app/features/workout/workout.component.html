@@ -1,0 +1,104 @@
+<div class="workout-container">
+
+  <h1 class="title">Workout Planner</h1>
+
+  <!-- LEVEL SWITCH -->
+  <div class="level-switch">
+    <button
+      *ngFor="let level of levels"
+      [class.active]="userLevel === level"
+      (click)="changeLevel(level)">
+      {{ level }}
+    </button>
+  </div>
+
+  <div class="content">
+
+    <!-- WEEKLY PLAN -->
+    <mat-card class="weekly-card">
+      <h3>{{ userLevel }} – Weekly Plan</h3>
+
+      <ul>
+        <li
+          *ngFor="let day of weeklyPlans[userLevel]"
+          [class.today]="day.day === todayName"
+          [class.completed]="isCompletedDay(day.day)"
+          [class.future]="isFutureDay(day.day)">
+
+          <span>{{ day.day }}</span>
+
+          <span class="status">
+            <ng-container *ngIf="isCompletedDay(day.day)"> ✔ </ng-container>
+            <ng-container *ngIf="day.day === todayName && !isCompletedDay(day.day)">🔥</ng-container>
+            <ng-container *ngIf="!isCompletedDay(day.day) && day.day !== todayName && isFutureDay(day.day)">🔒</ng-container>
+          </span>
+        </li>
+      </ul>
+    </mat-card>
+
+    <!-- TODAY WORKOUT -->
+    <mat-card class="today-card">
+
+      <h3>Today's Workout</h3>
+
+      <p><strong>Day:</strong> {{ todayPlan.day }}</p>
+      <p><strong>Focus:</strong> {{ todayPlan.focus }}</p>
+      <p><strong>Level:</strong> {{ userLevel }}</p>
+
+      <div class="streak">
+        🔥 Workout Streak: <strong>{{ streak }}</strong> days
+      </div>
+
+      <!-- EXERCISES -->
+      <div *ngIf="todayExercises.length > 0" class="exercise-list">
+
+        <div *ngFor="let group of exerciseGroups">
+
+          <ng-container *ngIf="getExercisesByGroup(group).length > 0">
+
+            <h4 class="group-title">{{ group }}</h4>
+
+            <ul>
+              <li
+                *ngFor="let ex of getExercisesByGroup(group)"
+                [class.done]="ex.completed">
+
+                <label class="exercise-row">
+                  <input
+                    type="checkbox"
+                    [checked]="ex.completed"
+                    (change)="toggleExercise(ex)" />
+
+                  <span class="exercise-name">{{ ex.name }}</span>
+                  <span class="exercise-sets">{{ ex.sets }}</span>
+                </label>
+
+              </li>
+            </ul>
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+      <!-- REST DAY -->
+      <p *ngIf="todayExercises.length === 0" class="rest-text">
+        😴 Rest Day – Recovery & Stretching
+      </p>
+
+      <!-- COMPLETE BUTTON -->
+      <button
+        *ngIf="todayPlan.focus !== 'Rest'"
+        class="complete-btn"
+        [disabled]="todayCompleted"
+        (click)="markCompleted()">
+
+        {{ todayCompleted ? 'Completed ✔' : 'Mark Workout Completed' }}
+
+      </button>
+
+    </mat-card>
+
+  </div>
+</div>

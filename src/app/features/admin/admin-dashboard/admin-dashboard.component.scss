@@ -1,0 +1,124 @@
+.admin-container { padding: 24px; }
+    .admin-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 16px;
+    }
+    .card {
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+  .spacer {
+  flex: 1;
+}
+
+.admin-container {
+  padding: 24px;
+}
+
+.admin-cards {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+}
+.button-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #125aa0;
+}
+
+.placeholder {
+  color: #777;
+  font-size: 16px;
+}
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout-btn {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #b71c1c;
+}
+
+.button-bar {
+  display: flex;
+  gap: 12px;
+}
+
+.button-bar button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #1976d2;
+  background-color: #1976d2;
+  color: white;
+  cursor: pointer;
+}
+
+.button-bar button:hover {
+  background-color: #125aa0;
+}
+
+.placeholder {
+  color: #777;
+  font-style: italic;
+}
+.toolbar {
+  display: flex;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container {
+  padding: 24px;
+}
+
+.button-bar {
+  display: flex;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.content-card {
+  padding: 20px;
+  min-height: 250px;
+}
+
+.placeholder {
+  text-align: center;
+  color: gray;
+  font-size: 16px;
+}

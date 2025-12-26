@@ -1,0 +1,295 @@
+/* =========================
+   LAYOUT
+========================= */
+
+.workout-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* =========================
+   LEVEL SWITCH
+========================= */
+
+.level-switch {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.level-switch button {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid #cfd8dc;
+  background: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.level-switch button:hover {
+  background: #e3f2fd;
+  border-color: #64b5f6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* Active */
+.level-switch button.active {
+  background: linear-gradient(135deg, #1976d2, #42a5f5);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 8px 18px rgba(25, 118, 210, 0.35);
+}
+
+/* Prevent hover overriding active */
+.level-switch button.active:hover {
+  transform: none;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+mat-card {
+  padding: 20px;
+  border-radius: 14px;
+}
+
+/* =========================
+   WEEKLY PLAN
+========================= */
+
+.weekly-card ul {
+  padding: 0;
+  margin: 0;
+}
+
+.weekly-card li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.weekly-card li.today {
+  background: #e3f2fd;
+  color: #1e88e5;
+  font-weight: 600;
+}
+
+/* =========================
+   TODAY CARD
+========================= */
+
+.today-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.today-card p {
+  margin: 4px 0;
+}
+
+.today-card strong {
+  color: #1e88e5;
+}
+
+.streak {
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+/* =========================
+   EXERCISES
+========================= */
+
+.exercise-list {
+  margin-top: 12px;
+}
+
+.exercise-list ul {
+  padding: 0;
+  margin: 0;
+}
+
+.exercise-list li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 14px;
+}
+
+/* =========================
+   COMPLETE BUTTON
+========================= */
+
+.complete-btn {
+  margin-top: 14px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #2e7d32;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.complete-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.complete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* EXERCISE GROUPS */
+.exercise-group {
+  margin-bottom: 16px;
+}
+
+.group-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e88e5;
+  margin-bottom: 6px;
+  padding-left: 4px;
+  border-left: 4px solid #1e88e5;
+}
+
+.exercise-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.exercise-group li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.exercise-name {
+  font-weight: 500;
+}
+
+.exercise-sets {
+  color: #555;
+  font-size: 14px;
+}
+
+/* WEEKLY STATUS */
+
+.weekly-card li {
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.weekly-card li.completed {
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.weekly-card li.future {
+  opacity: 0.5;
+}
+
+.weekly-card .status {
+  font-size: 14px;
+}
+
+/* EXERCISE CHECKBOX */
+
+.exercise-group li.done {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.exercise-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.exercise-row input {
+  accent-color: #2e7d32;
+}
+
+.exercise-row span {
+  flex: 1;
+}
+.exercise-group {
+  margin-bottom: 16px;
+}
+
+.group-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e88e5;
+  margin-bottom: 6px;
+  padding-left: 4px;
+  border-left: 4px solid #1e88e5;
+}
+
+.exercise-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.exercise-group li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.exercise-name {
+  font-weight: 500;
+}
+
+.exercise-sets {
+  color: #555;
+  font-size: 14px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+}

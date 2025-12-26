@@ -1,0 +1,105 @@
+<h1 class="title">Progress Tracker</h1>
+
+<!-- SUMMARY -->
+<div class="summary-grid">
+  <div class="card">
+    <h3>Weight</h3>
+    <p class="value">
+      {{ currentWeight }} kg
+      <span class="trend" [class.down]="isWeightDown" [class.up]="!isWeightDown">
+        {{ isWeightDown ? '↓' : '↑' }} {{ weightChange | number:'1.0-1' }} kg
+      </span>
+    </p>
+    <small>since last month</small>
+  </div>
+
+  <div class="card">
+    <h3>BMI</h3>
+    <p class="value">
+      {{ currentBMI }}
+      <span class="trend" [class.down]="isBMIDown" [class.up]="!isBMIDown">
+        {{ isBMIDown ? '↓' : '↑' }} {{ bmiChange | number:'1.1-1' }}
+      </span>
+    </p>
+    <small>since last month</small>
+  </div>
+
+  <div class="card">
+    <h3>Workout Consistency</h3>
+    <p class="value">
+      {{ currentWorkout }}%
+      <span class="trend" [class.up]="isWorkoutUp" [class.down]="!isWorkoutUp">
+        {{ isWorkoutUp ? '↑' : '↓' }} {{ workoutChange }}%
+      </span>
+    </p>
+    <small>since last month</small>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<div class="charts-grid">
+
+  <div class="chart-card">
+    <h3>Weight Progress</h3>
+    <canvas baseChart [data]="weightChartData" chartType="bar"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <h3>Workout Consistency</h3>
+    <canvas baseChart [data]="workoutChartData" [options]="workoutChartOptions" chartType="bar"></canvas>
+  </div>
+
+  <!-- BMI RADAR (FIXED SIZE) -->
+ <div class="card">
+  <h3>BMI Health Radar</h3>
+
+  <div class="chart-box">
+    <canvas
+      baseChart
+      [data]="bmiRadarData"
+      [options]="bmiRadarOptions"
+      [type]="'radar'">
+    </canvas>
+  </div>
+</div>
+
+  <div class="chart-card">
+  <h3>Workout Intensity</h3>
+  <div class="chart-wrapper doughnut">
+     <canvas
+        baseChart
+        [type]="'doughnut'"
+        [data]="workoutIntensityChartData"
+        [options]="workoutIntensityChartOptions">
+     </canvas>
+  </div>
+</div>
+
+  <div class="chart-card">
+    <h3>Consistency Streak</h3>
+    <div class="streak-numbers">
+      <div>
+        <span class="streak-value">{{ currentStreak }}</span>
+        <small>Current Streak</small>
+      </div>
+      <div>
+        <span class="streak-value muted">{{ bestStreak }}</span>
+        <small>Best Streak</small>
+      </div>
+    </div>
+    <div class="streak-dots">
+      <span *ngFor="let day of streakDays" class="dot" [class.active]="day"></span>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>Daily Weight Variability</h3>
+    <canvas
+      baseChart
+      [type]="dailyWeightChartType"
+      [data]="dailyWeightChartData"
+      [options]="dailyWeightChartOptions">
+    </canvas>
+  </div>
+
+</div>

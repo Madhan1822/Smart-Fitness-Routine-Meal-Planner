@@ -1,0 +1,315 @@
+.dashboard-grid {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.row {
+  display: grid;
+  gap: 24px;
+}
+
+.two-col {
+  grid-template-columns: 1fr 1fr;
+}
+
+.four-col {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+  padding: 20px;
+  border-radius: 14px;
+}
+
+.stat-card {
+  padding: 18px;
+  border-radius: 14px;
+  background: #f8f9fb;
+}
+
+.chart-card {
+  height: 320px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+h4 {
+  font-size: 15px;
+  color: #444;
+}
+
+.stat {
+  font-size: 26px;
+  font-weight: 600;
+  color: #2f5bea;
+}
+
+.primary-btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 12px;
+  background: #2f5bea;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #2449c8;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-btn {
+  background: #e6ecff;
+  color: #2f5bea;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.edit-btn {
+  background: transparent;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  padding: 4px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.warning {
+  margin-top: 8px;
+  color: #dc2626;
+  font-size: 13px;
+}
+.primary-btn {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.stat-card,
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover,
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+/* PROGRAM CARD BUTTONS */
+
+.btn-outline,
+.btn-primary {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Change button (outline) */
+.btn-outline {
+  background: transparent;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  padding: 6px 16px;
+}
+
+.btn-outline:hover {
+  background: #2563eb;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+}
+
+.btn-outline:active {
+  transform: scale(0.96);
+}
+
+/* Save Program button (primary) */
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  border: none;
+  color: white;
+  padding: 12px 0;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1e40af, #1e3a8a);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(30, 64, 175, 0.35);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+/* Disabled state */
+.btn-primary:disabled {
+  background: #c7d2fe;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.weight-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trend-arrow {
+  font-size: 18px;
+  font-weight: bold;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.trend-arrow.up {
+  color: #2ecc71; // green
+}
+
+.trend-arrow.down {
+  color: #e74c3c; // red
+}
+
+.trend-arrow.stable {
+  color: #95a5a6; // grey
+}
+
+.trend-arrow.up:hover,
+.trend-arrow.down:hover {
+  transform: scale(1.2);
+}
+/* Weight card container */
+.weight-card {
+  position: relative;
+}
+
+/* Header row */
+.weight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Edit button positioning + feel */
+.edit-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+
+  border-radius: 8px;
+  border: 1.5px solid #3f51b5;
+  background: transparent;
+  color: #3f51b5;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover feel */
+.edit-btn:hover {
+  background: #3f51b5;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(63, 81, 181, 0.25);
+}
+
+/* Click feel */
+.edit-btn:active {
+  transform: scale(0.95);
+}
+/* Weight trend arrow base */
+.trend-arrow {
+  margin-left: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* UP arrow */
+.trend-arrow.up {
+  color: #2e7d32; /* green */
+  animation: pulseUp 1.5s infinite;
+}
+
+/* DOWN arrow */
+.trend-arrow.down {
+  color: #c62828; /* red */
+  animation: pulseDown 1.5s infinite;
+}
+
+/* STABLE / NEUTRAL */
+.trend-arrow.stable {
+  color: #757575; /* grey */
+}
+
+/* Hover feel */
+.weight-card:hover .trend-arrow {
+  transform: scale(1.15);
+}
+
+/* Animations */
+@keyframes pulseUp {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes pulseDown {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+.weight-card {
+  position: relative;
+}
+
+/* Edit button top-right */
+.weight-card .edit-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}

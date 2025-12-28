@@ -1,3 +1,8 @@
 node_modules/
-.angular/
 dist/
+.env
+*.log
+.DS_Store
+coverage/
+.vscode/
+.idea/

@@ -1,0 +1,14 @@
+{
+    "name": "smart-fitness-app",
+    "version": "1.0.0",
+    "description": "Smart Fitness Routine & Meal Planner",
+    "scripts": {
+        "install:all": "cd backend && npm install && cd ../frontend && npm install",
+        "start:backend": "cd backend && npm run dev",
+        "start:frontend": "cd frontend && npm start",
+        "dev": "npx concurrently \"npm run start:backend\" \"npm run start:frontend\""
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}

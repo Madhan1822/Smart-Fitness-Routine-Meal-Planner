@@ -1,0 +1,48 @@
+<nav class="navbar" *ngIf="user$ | async as user">
+  <div class="nav-content">
+    <div class="logo" routerLink="/">
+      <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20,80 Q50,20 80,80" fill="none" stroke="url(#logo-grad)" stroke-width="12" stroke-linecap="round" />
+        <circle cx="50" cy="40" r="8" fill="#fff" />
+        <defs>
+          <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#00f2fe;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#4facfe;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="logo-text">Fit<span class="accent">Arc</span></span>
+    </div>
+
+    <div class="nav-links" *ngIf="user.role !== 'admin'">
+      <a routerLink="/workouts" routerLinkActive="active">Workouts</a>
+      <a routerLink="/meals" routerLinkActive="active">Meals</a>
+      <a routerLink="/progress" routerLinkActive="active">Progress</a>
+    </div>
+
+    <div class="nav-links" *ngIf="user.role === 'admin'">
+      <a routerLink="/admin" routerLinkActive="active">Dashboard</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="profile-btn" [matMenuTriggerFor]="menu">
+        <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.name" alt="avatar">
+        <span>{{ user.name }}</span>
+      </button>
+      <mat-menu #menu="matMenu" class="custom-menu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

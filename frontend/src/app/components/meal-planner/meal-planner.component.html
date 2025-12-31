@@ -1,0 +1,93 @@
+<div class="page-header">
+    <div class="header-text">
+        <h1>Meal Planner</h1>
+        <p>Fuel your body with the right nutrition for your goals.</p>
+    </div>
+</div>
+
+<div class="meal-grid" *ngIf="plans.length > 0; else noMeals">
+    <ng-container *ngFor="let plan of plans">
+        <div *ngIf="plan.is_approved; else pending" class="meal-card glass-panel">
+            <div class="card-header">
+                <h3>{{ plan.day }}</h3>
+                <div class="calorie-badge">{{ plan.meals.totalCalories }} kcal</div>
+            </div>
+
+            <div class="meal-sections">
+                <div class="meal-slot">
+                    <div class="slot-header">
+                        <span class="icon">🍳</span>
+                        <label>Breakfast</label>
+                    </div>
+                    <div class="slot-content" [class.eaten]="plan.completed_status.meals.breakfast">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" [(ngModel)]="plan.completed_status.meals.breakfast"
+                                (change)="updateStatus(plan)">
+                            <span class="checkmark"></span>
+                            <span class="food-name">{{ plan.meals.breakfast }}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="meal-slot">
+                    <div class="slot-header">
+                        <span class="icon">🥗</span>
+                        <label>Lunch</label>
+                    </div>
+                    <div class="slot-content" [class.eaten]="plan.completed_status.meals.lunch">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" [(ngModel)]="plan.completed_status.meals.lunch"
+                                (change)="updateStatus(plan)">
+                            <span class="checkmark"></span>
+                            <span class="food-name">{{ plan.meals.lunch }}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="meal-slot">
+                    <div class="slot-header">
+                        <span class="icon">🍗</span>
+                        <label>Dinner</label>
+                    </div>
+                    <div class="slot-content" [class.eaten]="plan.completed_status.meals.dinner">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" [(ngModel)]="plan.completed_status.meals.dinner"
+                                (change)="updateStatus(plan)">
+                            <span class="checkmark"></span>
+                            <span class="food-name">{{ plan.meals.dinner }}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="meal-slot">
+                    <div class="slot-header">
+                        <span class="icon">🍎</span>
+                        <label>Snacks</label>
+                    </div>
+                    <div class="slot-content" [class.eaten]="plan.completed_status.meals.snacks">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" [(ngModel)]="plan.completed_status.meals.snacks"
+                                (change)="updateStatus(plan)">
+                            <span class="checkmark"></span>
+                            <span class="food-name">{{ plan.meals.snacks }}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #pending>
+            <div class="meal-card glass-panel pending-card">
+                <h3>{{ plan.day }}</h3>
+                <p>⏳ Nutritional plan is pending approval from the Admin.</p>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>
+
+<ng-template #noMeals>
+    <div class="empty-state glass-panel">
+        <h2>No meal plan found.</h2>
+        <p>Complete your profile to generate your nutrition guide.</p>
+    </div>
+</ng-template>

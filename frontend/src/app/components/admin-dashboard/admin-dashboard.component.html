@@ -1,0 +1,250 @@
+<div class="admin-container">
+    <div class="page-header" *ngIf="!selectedUser">
+        <div class="header-text">
+            <h1>Admin Analytics & Dashboard</h1>
+            <p>Real-time insights and system management.</p>
+        </div>
+    </div>
+
+    <!-- Global Analytics Row -->
+    <div class="stats-grid" *ngIf="!selectedUser">
+        <div class="stat-box glass-panel">
+            <label>Platform Growth</label>
+            <div class="value">{{ stats.totalUsers }}</div>
+            <div class="sub-stat">Total active users registered</div>
+        </div>
+        <div class="stat-box glass-panel main-chart-box">
+            <label>Registration Trends (Last 6 Months)</label>
+            <div class="mini-chart">
+                <canvas baseChart [data]="registrationTrendData"
+                    [options]="{ responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }"
+                    [type]="'line'"></canvas>
+            </div>
+        </div>
+        <div class="stat-box glass-panel goal-pie-box">
+            <label>Goal Segments</label>
+            <div class="pie-container">
+                <canvas baseChart [data]="globalGoalData"
+                    [options]="{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#64748b', boxWidth: 10 } } } }"
+                    [type]="'pie'"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="system-summary" *ngIf="!selectedUser">
+        <div class="summary-card glass-panel wl">
+            <span class="count">{{ stats.goals['weight loss'] }}</span>
+            <label>Weight Loss</label>
+        </div>
+        <div class="summary-card glass-panel mg">
+            <span class="count">{{ stats.goals['muscle gain'] }}</span>
+            <label>Muscle Gain</label>
+        </div>
+        <div class="summary-card glass-panel mn">
+            <span class="count">{{ stats.goals['maintenance'] }}</span>
+            <label>Maintenance</label>
+        </div>
+    </div>
+
+    <!-- User List -->
+    <div class="user-list-section glass-panel" *ngIf="!selectedUser">
+        <div class="section-header">
+            <h3>User Management Directory</h3>
+            <div class="search-box">
+                <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterUsers()"
+                    placeholder="Search users...">
+            </div>
+        </div>
+
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>User Details</th>
+                    <th>Fitness Goal</th>
+                    <th>Performance</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of filteredUsers">
+                    <td>
+                        <div class="user-info">
+                            <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.name" alt="avatar">
+                            <div class="details">
+                                <span class="name">{{ user.name }}</span>
+                                <span class="email">{{ user.email }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="badge" [class]="user.goal">{{ user.goal }}</span></td>
+                    <td>
+                        <div class="mini-progress">
+                            <div class="fill" style="width: 75%"></div>
+                        </div>
+                    </td> <!-- Mocked for table view -->
+                    <td>
+                        <button class="action-btn" (click)="viewUserDetails(user)">Manage & Track</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- User Details View (Plans + Progress) -->
+    <div class="user-detail-view" *ngIf="selectedUser">
+        <div class="detail-sidebar glass-panel">
+            <button class="back-link-btn" (click)="closeDetails()">
+                <mat-icon>arrow_back</mat-icon>
+                <span>Back to Directory</span>
+            </button>
+            <div class="user-profile-header">
+                <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + selectedUser.name" alt="avatar">
+                <div class="profile-info">
+                    <h2>{{ selectedUser.name }}</h2>
+                    <span class="goal-text-badge">{{ selectedUser.goal }}</span>
+                    <p class="user-email-text">{{ selectedUser.email }}</p>
+                </div>
+            </div>
+
+            <div class="management-nav">
+                <button [class.active]="activeTab === 'plans'" (click)="activeTab = 'plans'">
+                    <mat-icon>edit_note</mat-icon>
+                    <span>Nutrition & Workout</span>
+                </button>
+                <button [class.active]="activeTab === 'progress'" (click)="activeTab = 'progress'">
+                    <mat-icon>query_stats</mat-icon>
+                    <span>Performance Analytics</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="detail-content">
+            <div class="content-header">
+                <h1 *ngIf="activeTab === 'plans'">Plan Customization</h1>
+                <h1 *ngIf="activeTab === 'progress'">User Growth Tracking</h1>
+
+                <div class="progress-controls glass-panel" *ngIf="activeTab === 'progress'">
+                    <div class="view-toggle">
+                        <button [class.active]="viewMode === 'weekly'"
+                            (click)="viewMode = 'weekly'; refreshProgressView()">Weekly</button>
+                        <button [class.active]="viewMode === 'monthly'"
+                            (click)="viewMode = 'monthly'; refreshProgressView()">Monthly</button>
+                    </div>
+                    <select *ngIf="viewMode === 'monthly'" [(ngModel)]="selectedMonth" (change)="refreshProgressView()"
+                        class="month-select">
+                        <option *ngFor="let month of availableMonths" [value]="month">{{ formatMonth(month) }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tab 1: Plans Edit -->
+            <div class="plans-tab" *ngIf="activeTab === 'plans'">
+                <div class="plan-cards-container">
+                    <div *ngFor="let plan of userPlans" class="editor-card glass-panel">
+                        <div class="card-top">
+                            <div class="day-indicator">
+                                <span class="day-name">{{ plan.day }}</span>
+                                <span class="status-indicator" [class.approved]="plan.is_approved">
+                                    {{ plan.is_approved ? 'Approved' : 'Pending' }}
+                                </span>
+                            </div>
+                            <div class="card-actions-top">
+                                <button class="mini-save-btn" (click)="savePlanChanges(plan)" matTooltip="Save Changes">
+                                    <mat-icon>save</mat-icon>
+                                </button>
+                                <button class="mini-approve-btn" *ngIf="!plan.is_approved" (click)="approvePlan(plan)"
+                                    matTooltip="Approve Plan">
+                                    <mat-icon>check_circle</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="editor-grid">
+                            <div class="editor-group workout-section">
+                                <label><mat-icon>fitness_center</mat-icon> Exercises</label>
+                                <div class="items-list">
+                                    <div *ngFor="let ex of plan.exercises; let i = index; trackBy: trackByFn"
+                                        class="item-input">
+                                        <input [(ngModel)]="ex.name" placeholder="Exercise name" class="ex-name">
+                                        <input [(ngModel)]="ex.sets" placeholder="Sets/Reps" class="ex-sets">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="editor-group nutrition-section">
+                                <label><mat-icon>restaurant</mat-icon> Meal Plan</label>
+                                <div class="meal-inputs">
+                                    <div class="meal-row">
+                                        <span class="meal-abbr">B</span>
+                                        <input [(ngModel)]="plan.meals.breakfast" placeholder="Breakfast">
+                                    </div>
+                                    <div class="meal-row">
+                                        <span class="meal-abbr">L</span>
+                                        <input [(ngModel)]="plan.meals.lunch" placeholder="Lunch">
+                                    </div>
+                                    <div class="meal-row">
+                                        <span class="meal-abbr">D</span>
+                                        <input [(ngModel)]="plan.meals.dinner" placeholder="Dinner">
+                                    </div>
+                                    <div class="meal-row">
+                                        <span class="meal-abbr">S</span>
+                                        <input [(ngModel)]="plan.meals.snacks" placeholder="Snacks">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: User Progress -->
+            <div class="progress-tab" *ngIf="activeTab === 'progress'">
+                <div class="admin-stats-overview">
+                    <div class="stat-card glass-panel workout-stat">
+                        <div class="stat-icon-bg">💪</div>
+                        <div class="stat-content">
+                            <span class="stat-val">{{ userProgress.totalWorkouts }}</span>
+                            <span class="stat-lbl">Exercises Done</span>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel meal-stat">
+                        <div class="stat-icon-bg">🥗</div>
+                        <div class="stat-content">
+                            <span class="stat-val">{{ userProgress.totalMeals }}</span>
+                            <span class="stat-lbl">Meals Tracked</span>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel score-stat">
+                        <div class="stat-icon-bg">🎯</div>
+                        <div class="stat-content">
+                            <span class="stat-val">{{ userProgress.efficiency }}%</span>
+                            <span class="stat-lbl">Discipline Score</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-charts-grid">
+                    <div class="chart-section glass-panel">
+                        <div class="chart-header">
+                            <h3>Workout Consistency</h3>
+                            <span class="chart-sub">Completion percentage per day</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas baseChart [data]="workoutData" [options]="chartOptions" [type]="'bar'"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-section glass-panel">
+                        <div class="chart-header">
+                            <h3>Nutrition Adherence</h3>
+                            <span class="chart-sub">Meal tracking consistency</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas baseChart [data]="mealData" [options]="chartOptions" [type]="'line'"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="profile-wrapper">
+    <div class="profile-card glass-panel">
+        <div class="profile-header">
+            <div class="avatar-large">
+                <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + profileForm.get('name')?.value"
+                    alt="avatar">
+            </div>
+            <h2>Account Settings</h2>
+            <p>Update your personal info and fitness specifications.</p>
+        </div>
+
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>Full Name</label>
+                    <input type="text" formControlName="name">
+                </div>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" formControlName="age">
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select formControlName="gender" class="custom-select">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Height (cm)</label>
+                    <input type="number" formControlName="height">
+                </div>
+
+                <div class="form-group">
+                    <label>Weight (kg)</label>
+                    <input type="number" formControlName="weight">
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Fitness Goal</label>
+                    <select formControlName="goal" class="goal-select">
+                        <option value="weight loss">Weight Loss</option>
+                        <option value="muscle gain">Muscle Gain</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="profileForm.invalid" class="save-btn">
+                Save Changes
+            </button>
+        </form>
+    </div>
+</div>

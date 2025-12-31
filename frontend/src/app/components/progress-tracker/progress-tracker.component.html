@@ -1,0 +1,68 @@
+<div class="page-header">
+    <div class="header-text">
+        <h1>Your Analytics</h1>
+        <p>Visualize your consistency and track your journey to success.</p>
+    </div>
+
+    <div class="analytics-controls glass-panel">
+        <div class="mode-switch">
+            <button [class.active]="viewMode === 'weekly'" (click)="viewMode = 'weekly'; onModeChange()">Weekly</button>
+            <button [class.active]="viewMode === 'monthly'"
+                (click)="viewMode = 'monthly'; onModeChange()">Monthly</button>
+        </div>
+
+        <select *ngIf="viewMode === 'monthly'" [(ngModel)]="selectedMonth" (change)="onModeChange()"
+            class="month-select">
+            <option *ngFor="let month of availableMonths" [value]="month">
+                {{ formatMonth(month) }}
+            </option>
+        </select>
+    </div>
+</div>
+
+<div class="stats-overview">
+    <div class="stat-card glass-panel">
+        <div class="stat-icon workout">💪</div>
+        <div class="stat-info">
+            <span class="label">Workouts</span>
+            <span class="value">{{ totalWorkoutsCompleted }}</span>
+            <span class="trend">{{ viewMode === 'weekly' ? 'Done this week' : 'Done this month' }}</span>
+        </div>
+    </div>
+
+    <div class="stat-card glass-panel">
+        <div class="stat-icon meal">🍎</div>
+        <div class="stat-info">
+            <span class="label">Meals</span>
+            <span class="value">{{ totalMealsConsumed }}</span>
+            <span class="trend">{{ viewMode === 'weekly' ? 'Tracked this week' : 'Tracked this month' }}</span>
+        </div>
+    </div>
+
+    <div class="stat-card glass-panel">
+        <div class="stat-icon average">📈</div>
+        <div class="stat-info">
+            <span class="label">Efficiency</span>
+            <span class="value">{{ overallEfficiency }}%</span>
+            <span class="trend">{{ viewMode === 'weekly' ? 'Weekly Average' : 'Monthly Average' }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="charts-container">
+    <div class="chart-box glass-panel">
+        <h3>Workout Consistency</h3>
+        <div class="chart-wrapper">
+            <canvas baseChart [data]="workoutData" [options]="chartOptions" [type]="'bar'">
+            </canvas>
+        </div>
+    </div>
+
+    <div class="chart-box glass-panel">
+        <h3>Nutrition Adherence</h3>
+        <div class="chart-wrapper">
+            <canvas baseChart [data]="mealData" [options]="chartOptions" [type]="'line'">
+            </canvas>
+        </div>
+    </div>
+</div>

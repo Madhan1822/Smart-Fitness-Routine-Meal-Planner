@@ -1,0 +1,53 @@
+<div class="page-header">
+    <div class="header-text">
+        <h1>Your Weekly Routine</h1>
+        <p>Consistency is the key to progress. Keep going!</p>
+    </div>
+    <div class="goal-badge" *ngIf="userGoal">
+        Goal: {{ userGoal }}
+    </div>
+</div>
+
+<div class="workout-grid" *ngIf="plans.length > 0; else noPlans">
+    <ng-container *ngFor="let plan of plans">
+        <div *ngIf="plan.is_approved; else pending" class="day-card glass-panel" [class.completed]="isDayDone(plan)">
+            <div class="card-header">
+                <div class="day-info">
+                    <h3>{{ plan.day }}</h3>
+                    <p class="focus-area" *ngIf="isDayDone(plan)">🎉 Full Progress!</p>
+                </div>
+                <div class="completion-pill" [class.full]="isDayDone(plan)">
+                    {{ getCompletionRate(plan) }}% Done
+                </div>
+            </div>
+
+            <div class="exercise-list">
+                <div *ngFor="let ex of plan.exercises; let i = index" class="exercise-item" [class.done]="ex.completed">
+                    <label class="checkbox-container">
+                        <input type="checkbox" [(ngModel)]="ex.completed" (change)="updateStatus(plan)">
+                        <span class="checkmark"></span>
+                        <div class="ex-info">
+                            <span class="ex-name">{{ ex.name }}</span>
+                            <span class="ex-meta">{{ ex.duration || ex.sets }}</span>
+                            <span class="ex-desc" *ngIf="ex.description">{{ ex.description }}</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #pending>
+            <div class="day-card glass-panel pending-card">
+                <h3>{{ plan.day }}</h3>
+                <p>⏳ This plan is pending approval from the Admin.</p>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>
+
+<ng-template #noPlans>
+    <div class="empty-state glass-panel">
+        <h2>No plans generated yet.</h2>
+        <p>Complete your profile to get started!</p>
+    </div>
+</ng-template>
